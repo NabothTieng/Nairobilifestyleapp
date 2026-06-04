@@ -9,6 +9,9 @@ import { WeatherIcon } from './components/weather-icon';
 import { LoadingScreen } from './components/loading-screen';
 import { useLoadingState } from './hooks/use-loading-state';
 
+// Import logo correctly
+import logo from './components/logo/logo.svg';   // ← Fixed import
+
 export const REGIONS = [
   'Kahawa Sukari', 'Runda', 'Westlands', 'Karen', 'Lavington',
   'Gigiri', 'Kilimani', 'Hurlingham'
@@ -30,7 +33,7 @@ function AppContent() {
   const [advice, setAdvice] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { setIsLoading } = useLoadingState();   // Only using setIsLoading
+  const { setIsLoading } = useLoadingState();
 
   const fetchAdvice = async (displayName: string) => {
     setLoading(true);
@@ -70,14 +73,10 @@ function AppContent() {
     fetchAdvice(selectedRegion);
   }, [selectedRegion]);
 
-  // UV Advice
   const getUvAdvice = (uvIndex?: number) => {
-    if (!uvIndex || uvIndex < 3) 
-      return { level: "Low", advice: "Low UV risk today." };
-    if (uvIndex >= 8) 
-      return { level: "Very High", advice: "Avoid direct sun 10 AM - 4 PM. Use SPF 50+." };
-    if (uvIndex >= 6) 
-      return { level: "High", advice: "Apply sunscreen generously and seek shade." };
+    if (!uvIndex || uvIndex < 3) return { level: "Low", advice: "Low UV risk today." };
+    if (uvIndex >= 8) return { level: "Very High", advice: "Avoid direct sun 10 AM - 4 PM. Use SPF 50+." };
+    if (uvIndex >= 6) return { level: "High", advice: "Apply sunscreen generously and seek shade." };
     return { level: "Moderate", advice: "Sunscreen recommended if staying outdoors." };
   };
 
@@ -120,9 +119,8 @@ function AppContent() {
 
         {!loading && !error && advice && (
           <>
-            {/* Header Info */}
             <div className="mb-6 bg-primary/10 border border-primary/20 rounded-lg p-4 flex items-start gap-3">
-              <WeatherIcon iconUrl={advice.weather_icon} className="w-15 h-15 mt-0.5" />
+              <WeatherIcon iconUrl={advice.weather_icon} className="w-5 h-5 mt-0.5" />
               <div>
                 <p className="text-sm">
                   <span className="font-medium">{advice.display_name}</span> •{' '}
@@ -198,7 +196,6 @@ function AppContent() {
                 </div>
               </AdviceCard>
 
-              {/* Skin Protection */}
               <AdviceCard icon={Sun} title="Skin Protection" accentColor="primary">
                 <div>
                   <p className="font-medium text-foreground mb-2">
@@ -216,11 +213,31 @@ function AppContent() {
           </>
         )}
       </main>
+      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-border mt-12 relative overflow-hidden">
+        {/* Logo as Background */}
+        <div 
+          className="absolute inset-0 opacity-9 pointer-events-none"
+          style={{
+            backgroundImage: `url(${logo})`,
+            backgroundSize: '180px',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
 
-      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mt-12 border-t border-border">
-        <p className="text-center text-sm text-muted-foreground">
-          Nairobi Lifestyle Advisor • Personalized daily guidance for {selectedRegion} residents
-        </p>
+        <div className="relative flex flex-col items-center gap-3 text-center">
+          
+          
+          <p className="text-sm text-muted-foreground">
+            © 2026 Nairobi Lifestyle Advisor. All rights reserved.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Personalized local intelligence for the {selectedRegion} community.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Privacy Policy • Terms of Service
+          </p>
+        </div>
       </footer>
     </div>
   );
