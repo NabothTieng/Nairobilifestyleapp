@@ -9,7 +9,7 @@ A weather intelligence application built on the **Weather-AI API** that translat
 
 ## 🎯 Project Overview
 
-Built as part of the **Weather-AI technical assessment**, this application demonstrates end-to-end API integration — from secure server-side consumption of Weather-AI's data to a polished, opinionated frontend experience designed around real user needs in Nairobi.
+Built as part of the **Weather-AI technical assessment**, this application demonstrates end-to-end API integration from secure server-side consumption of Weather-AI's data to a polished, opinionated frontend experience designed around real user needs in Nairobi.
 
 The core thesis: raw weather numbers mean little to most people. What matters is *what to do with that information*. This app bridges that gap.
 
@@ -31,15 +31,18 @@ The core thesis: raw weather numbers mean little to most people. What matters is
 
 ## 🛠 Tech Stack & Design Decisions
 Frontend  →  React + Vite + TypeScript + Tailwind CSS + shadcn/ui
-Backend   →  Supabase Edge Functions (Deno runtime)
+
+Backend   →  Supabase Edge Functions
+
 Database  →  Supabase PostgreSQL (caching layer)
+
 Hosting   →  Vercel (frontend) + Supabase (backend)
 
 ### Why this stack?
 
 Every service used operates comfortably within its **free tier**, which was a conscious constraint given the 48-hour window. Beyond cost, each choice has a technical rationale:
 
-- **Supabase Edge Functions** serve as the secure REST API layer. Weather-AI API keys never touch the client — they live exclusively in edge function environment variables, isolated from the browser entirely.
+- **Supabase Edge Functions** serve as the secure REST API layer. Weather-AI API keys never touch the client they live exclusively in edge function environment variables, isolated from the browser entirely.
 - **Supabase PostgreSQL** acts as the caching store. A `weather_advice_cache` table with a `JSONB` column holds pre-computed advice per region, with a `expires_at` TTL field for freshness control.
 - **Vite + React + TypeScript** for a fast, type-safe developer experience with minimal configuration overhead.
 - **shadcn/ui + Tailwind** for a consistent, accessible component system without opinionated design lock-in.
@@ -47,6 +50,7 @@ Every service used operates comfortably within its **free tier**, which was a co
 ---
 
 ## 🏗 Architecture
+```
 User Browser
 │
 ▼
@@ -63,6 +67,7 @@ Supabase Edge Function (/get-advice)
 │                       Store in cache (TTL: 4 hours)
 │                             │
 └─────────────────────────────┘
+```
 Return advice to client
 
 ### Cache Strategy
@@ -151,7 +156,7 @@ This stack is sized for **100–200 concurrent users**, which matches the curren
 - **ElastiCache (Redis)** as a high-throughput caching layer in place of PostgreSQL for sub-millisecond cache reads
 - **Multi-region Supabase** or Aurora Global Database for data residency and failover
 
-For now, Supabase's global CDN handles static asset delivery and Vercel's edge network covers the frontend — both are production-grade for this scale.
+For now, Supabase's global CDN handles static asset delivery and Vercel's edge network covers the frontend both are production-grade for this scale.
 
 ---
 
@@ -192,5 +197,3 @@ This project was created as an independent technical work product. No portion of
 - Weather data provided by [Weather-AI](https://weather-ai.co) via their developer API
 
 ---
-
-*Built with focus and a deadline. The constraint was real — so was the work.*
