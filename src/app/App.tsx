@@ -120,7 +120,7 @@ function AppContent() {
         {!loading && !error && advice && (
           <>
             <div className="mb-6 bg-primary/10 border border-primary/20 rounded-lg p-4 flex items-start gap-3">
-              <WeatherIcon iconUrl={advice.weather_icon} className="w-5 h-5 mt-0.5" />
+              <WeatherIcon iconUrl={advice.weather_icon} className="w-25 h-25 mt-0.5" />
               <div>
                 <p className="text-sm">
                   <span className="font-medium">{advice.display_name}</span> •{' '}
