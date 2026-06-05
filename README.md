@@ -13,6 +13,12 @@ Built as part of the **Weather-AI technical assessment**, this application demon
 
 The core thesis: raw weather numbers mean little to most people. What matters is *what to do with that information*. This app bridges that gap.
 
+
+## 🎬 Video Walkthrough
+
+A full walkthrough of the application covering the architecture decisions, live demo across regions, caching behavior, and the reasoning behind feature choices.
+
+📽 [Watch the walkthrough](https://drive.google.com/file/d/1zswt0lsKTBjnIgMSgEeh38S2eP2i7vz3/view?usp=drive_link)
 ---
 
 ## ✨ Features
